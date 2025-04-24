@@ -62,7 +62,7 @@ fun calculateCommission(
 
     return when (cardType) {
         VISA -> calculateVisaCommission(amountTransfer)
-        MASTERCARD -> calculateMastercardCommission(amountTransfer = amountTransfer)
+        MASTERCARD -> calculateMastercardCommission(MASTERCARD_MONTHLY_LIMIT, amountTransfer)
         MIR -> 0.0
         else -> {
             println("Неизвестный тип карты.")
@@ -95,7 +95,7 @@ fun calculateVisaCommission(amountTransfer: Double): Double {
 }
 
 // Функция вычисляет комиссию для карты mastercard
-fun calculateMastercardCommission(comissionFreeLimit: Double = MASTERCARD_MONTHLY_LIMIT, amountTransfer: Double): Double {
+fun calculateMastercardCommission(comissionFreeLimit: Double, amountTransfer: Double): Double {
     return if (amountTransfer - comissionFreeLimit > 0)
         (amountTransfer - comissionFreeLimit) * MASTERCARD_COMMISSION_RATE + MASTERCARD_FIXED_FEE
         else 0.0
